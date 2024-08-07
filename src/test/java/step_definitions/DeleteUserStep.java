@@ -27,7 +27,6 @@ public class DeleteUserStep {
     public void user_should_be_able_to_see_an_existing_user_data_with(String userName) {
         boolean isExistingUserAvailableInTable = homePage.findRowElementsWithinSmartTable(userName).size() > 0;
         Assert.assertTrue("The existing user with username " + userName  + " is not available in Smart table", isExistingUserAvailableInTable);
-
     }
     @Then("User should be able to delete an existing user data with {string}")
     public void user_should_be_able_to_delete_an_existing_user_data_with(String userName) {
@@ -36,6 +35,7 @@ public class DeleteUserStep {
         boolean isDeletedUserAvailableInTable = homePage.findRowElementsWithinSmartTable(userName).size() > 0;
 
         Assert.assertFalse("The existing user with username " + userName  + " is still available in Smart table", isDeletedUserAvailableInTable);
+        oLog.info("The existing user with username " + userName  + " is deleted successfully");
     }
 
 }

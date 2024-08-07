@@ -8,31 +8,25 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.openqa.selenium.support.ui.Select;
 import pages.AddUserModal;
-import pages.ConfirmationDialog;
 import pages.HomePage;
 import utilities.ConfigurationReader;
 import utilities.Driver;
 
 public class AddUserStep {
-
-
     public static final Logger oLog = LogManager.getLogger(AddUserStep.class);
 
     HomePage homePage = new HomePage();
     AddUserModal addUserModal = new AddUserModal();
-    ConfirmationDialog confirmationDialog = new ConfirmationDialog();
 
     @Given("User navigates to way2automation website")
     public void user_navigates_to_way2automation_website() {
         Driver.getInstance().getDriver().get(ConfigurationReader.getProperty("way2automation.url"));
         oLog.info("User navigated to way2automation website");
-
     }
     @Then("User should be able to see Add User button")
     public void user_should_be_able_to_see_add_user_button() {
         boolean isAddUserBtnVisible = homePage.addUserButton.isDisplayed();
         Assert.assertTrue("Add User button is not visible", isAddUserBtnVisible);
-
     }
     @Then("Add User button should be enabled")
     public void add_user_button_should_be_enabled() {
@@ -89,6 +83,6 @@ public class AddUserStep {
         boolean isNewUserAvailableInTable = homePage.findRowElementsWithinSmartTable(fName, lName, userName, email, pNumber).size() > 0;
 
         Assert.assertTrue("The newly created user with username " + userName  + " is not available in Smart table", isNewUserAvailableInTable);
-
+        oLog.info("The newly creation of user with username " + userName  + " is successful");
     }
 }

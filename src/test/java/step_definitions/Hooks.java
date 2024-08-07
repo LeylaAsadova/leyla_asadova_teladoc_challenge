@@ -4,6 +4,8 @@ package step_definitions;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
@@ -18,15 +20,20 @@ import java.util.concurrent.TimeUnit;
  */
 public class Hooks {
 
+    public static final Logger oLog = LogManager.getLogger(Hooks.class);
+
+
     // WebDriver instance for the current scenario
     public WebDriver driver = null;
 
     /**
      * Method to set up the WebDriver instance before each scenario.
      * Initializes the WebDriver, sets it to the Driver singleton, and configures basic settings.
+     *
+     * @param scenario the current Cucumber scenario
      */
     @Before
-    public void setUp() {
+    public void setUp(Scenario scenario) {
         // Create a WebDriver instance using BrowserFactory
         driver = BrowserFactory.createInstance();
         // Set the WebDriver instance to the Driver singleton
@@ -37,6 +44,9 @@ public class Hooks {
         // Configure the WebDriver instance
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.manage().window().maximize();
+
+        oLog.info("The WebDriver instance created successfully");
+        oLog.info("The scenario execution " + scenario.getName() + " is started");
     }
 
     /**
@@ -55,5 +65,8 @@ public class Hooks {
         }
         // Remove the WebDriver instance from the Driver singleton
         Driver.getInstance().removeDriver();
+
+        oLog.info("The scenario " + scenario.getName() + " is completed");
     }
+
 }
